@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 module.exports = router;
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
