@@ -1,6 +1,9 @@
 {
   "name": "stackathonNew",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.16.3"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +11,9 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open --mode development"
   },
-  "keywords": [],
+  "keywords": [
+    "heroku"
+  ],
   "author": "",
   "devDependencies": {
     "@babel/core": "^7.11.1",
