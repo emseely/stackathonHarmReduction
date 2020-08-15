@@ -1,8 +1,19 @@
 import React from "react";
 class DrugSearch extends React.Component {
-  // constructor() {
-  //   super();
-  // }
+  constructor() {
+    super();
+    this.state = {};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
 
   render() {
     return (

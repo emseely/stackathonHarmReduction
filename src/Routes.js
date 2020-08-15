@@ -1,12 +1,13 @@
 import React from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
-import { Home, DrugSearch } from "./components";
+import { Home, DrugSearch, About, Settings } from "./components";
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/about" component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/settings" component={Settings} />
       <Route path="/search" component={DrugSearch} />
     </Switch>
   );

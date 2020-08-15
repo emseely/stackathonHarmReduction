@@ -1,0 +1,20 @@
+{
+  "name": "Stackathon",
+  "short_name": "Stackathon",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "A harm-reduction tool.",
+  "icons": [
+    {
+      "src": "/src/assets/lighthousesmall.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/src/assets/lighthouse.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

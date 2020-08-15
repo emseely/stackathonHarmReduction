@@ -1,49 +1,38 @@
-// const express = require("express");
-// const path = require("path");
-// const cluster = require("cluster");
-// const numCPUs = require("os").cpus().length;
+const express = require("express");
+const path = require("path");
+const volleyball = require("volleyball");
 
-// const isDev = process.env.NODE_ENV !== "production";
-// const PORT = process.env.PORT || 5000;
+const app = express();
 
-// // Multi-process to utilize all CPU cores.
-// if (!isDev && cluster.isMaster) {
-//   console.error(`Node cluster master ${process.pid} is running`);
+// logging middleware
+// Only use logging middleware when not running tests
+const debug = process.env.NODE_ENV === "test";
+app.use(volleyball.custom({ debug }));
 
-//   // Fork workers.
-//   for (let i = 0; i < numCPUs; i++) {
-//     cluster.fork();
-//   }
+// body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//   cluster.on("exit", (worker, code, signal) => {
-//     console.error(
-//       `Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`
-//     );
-//   });
-// } else {
-//   const app = express();
+// static middleware
+app.use(express.static(path.join(__dirname, "../src")));
 
-//   // Priority serve any static files.
-//   app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../src/index.html"));
+  if (err) {
+    res.status(500).send(err);
+  }
+}); // Send index.html for any other requests
 
-//   // Answer API requests.
-//   app.get("/api", function (req, res) {
-//     res.set("Content-Type", "application/json");
-//     res.send('{"message":"Hello from the custom server!"}');
-//   });
+app.use("/api", require("./api")); // include our routes!
 
-//   // All remaining requests return the React app, so it can handle routing.
-//   app.get("*", function (request, response) {
-//     response.sendFile(
-//       path.resolve(__dirname, "../react-ui/build", "index.html")
-//     );
-//   });
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../src/index.html"));
+// }); // Send index.html for any other requests
 
-//   app.listen(PORT, function () {
-//     console.error(
-//       `Node ${
-//         isDev ? "dev server" : "cluster worker " + process.pid
-//       }: listening on port ${PORT}`
-//     );
-//   });
-// }
+// error handling middleware
+app.use((err, req, res, next) => {
+  if (process.env.NODE_ENV !== "test") console.error(err.stack);
+  res.status(err.status || 500).send(err.message || "Internal server error");
+});
+
+module.exports = app;
