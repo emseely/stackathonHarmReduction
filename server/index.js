@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const volleyball = require("volleyball");
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -14,10 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // static middleware
-app.use(express.static(path.join(__dirname, "../src")));
+app.use(express.static(path.join(__dirname, "..", "src")));
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../src/index.html"));
+  res.sendFile(path.join(__dirname, "..", "src/index.html"));
   if (err) {
     res.status(500).send(err);
   }
