@@ -12,9 +12,6 @@ const Footer = () => {
         </a>
       </div>
       <div className="footerHalf">
-        <a href="https://www.linkedin.com/in/deanna-dunne/">
-          <AiOutlineLinkedin size={25} /> Deanna Dunne
-        </a>
         <a href="https://www.linkedin.com/in/emma-seely-katz-b4386a1a3/">
           <AiOutlineLinkedin size={25} /> Emma Seely-Katz
         </a>
