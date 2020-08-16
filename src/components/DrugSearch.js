@@ -4,7 +4,13 @@ import regeneratorRuntime from "regenerator-runtime";
 class DrugSearch extends React.Component {
   constructor() {
     super();
-    this.state = { drugOne: "", drugTwo: "", interactions: null };
+    this.state = {
+      drugOne: "",
+      drugTwo: "",
+      interactions: null,
+      singleDrugOne: null,
+      singleDrugTwo: null,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -15,20 +21,25 @@ class DrugSearch extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+
     const nameOne = this.state.drugOne;
     const nameTwo = this.state.drugTwo;
-    const singleDrugId = async (name) => {
+
+    if (nameOne === "" && nameTwo === "") return;
+
+    const singleDrugId = async (name = "") => {
       const { data } = await axios.get(
         `https://rxnav.nlm.nih.gov/REST/rxcui.json?name=${name}`
       );
       console.log(data.idGroup.rxnormId[0]);
       return data.idGroup.rxnormId[0];
     };
-    const drugDataById = async (idOne, idTwo) => {
+
+    const drugInteractionsByIds = async (idOne, idTwo) => {
       const { data } = await axios.get(
         // `https://rxnav.nlm.nih.gov/REST/interaction/interaction.json?rxcui=${id}`
-        `https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${idOne}+${
-          idTwo || ""
+        `https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${idOne}${
+          idTwo ? `+${idTwo}` : ""
         }`
       );
 
@@ -36,23 +47,56 @@ class DrugSearch extends React.Component {
         return data.fullInteractionTypeGroup[0].fullInteractionType[0]
           .interactionPair[0].description;
       } else {
-        return null;
+        return "No significant interactions detected between these substances. Check with a healthcare professional for more info!";
       }
     };
+
+    // const drugDataById = async (id) => {
+    //   const { data } = await axios.get(
+    //     `https://rxnav.nlm.nih.gov/REST/interaction/interaction.json?rxcui=${id}`
+    //   );
+    //   if (data.interactionTypeGroup) {
+    //     return data.interactionTypeGroup[0].interactionType[0];
+    //   } else {
+    //     return "No high severity interactions found with this drug. Check with a healthcare professional for more info!";
+    //   }
+    // };
+
     try {
-      const idOne = await singleDrugId(nameOne);
-      const idTwo = await singleDrugId(nameTwo);
-      const interactions = await drugDataById(idOne, idTwo);
-      console.log("horray", interactions);
-      this.setState({ interactions: interactions });
+      let idOne, idTwo;
+      if (nameOne !== "") idOne = await singleDrugId(nameOne);
+      if (nameTwo !== "") idTwo = await singleDrugId(nameTwo);
+      if (idOne && idTwo) {
+        const interactions = await drugInteractionsByIds(idOne, idTwo);
+        console.log("horray", interactions);
+
+        const singleDrugOne = idOne;
+        const singleDrugTwo = idTwo;
+
+        this.setState({
+          interactions: interactions,
+
+          singleDrugOne: singleDrugOne,
+          singleDrugTwo: singleDrugTwo,
+        });
+      } else if (idOne || idTwo) {
+        const singleDrugOne = idOne || idTwo;
+        const name = nameOne || nameTwo;
+        this.setState({
+          drugOne: name,
+          singleDrugOne: singleDrugOne,
+          singleDrugTwo: null,
+          interactions: null,
+        });
+      }
     } catch (e) {
       console.error(e);
     }
   }
 
   render() {
-    const { interactions } = this.state;
-
+    const { interactions, singleDrugOne, singleDrugTwo } = this.state;
+    console.log("ay", singleDrugOne, singleDrugTwo);
     return (
       <div id="drugSearch">
         <div className="column">
@@ -68,7 +112,7 @@ class DrugSearch extends React.Component {
                 />
               </label>
               <label>
-                Substance Two:
+                (Optional) Substance Two:
                 <input
                   type="text"
                   name="drugTwo"
@@ -76,23 +120,36 @@ class DrugSearch extends React.Component {
                   onChange={this.handleChange}
                 />
               </label>
-              <button type="submit">Submit</button>
+              <button type="submit">Check Interactions</button>
             </form>
           </div>
-          <div>Saved drugs?</div>
         </div>
+
         <div className="column">
-          <h2>Substance Interactions</h2>
-          <div>
-            {interactions ? (
+          {singleDrugOne && this.state.drugOne !== "" && (
+            <a
+              href={`https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=${singleDrugOne}`}
+            >
+              Click here for more info on {this.state.drugOne}
+            </a>
+          )}
+          {singleDrugTwo && this.state.drugTwo !== "" && (
+            <a
+              href={`https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=${singleDrugTwo}`}
+            >
+              Click here for more info on {this.state.drugTwo}
+            </a>
+          )}
+
+          {interactions && (
+            <div>
+              <h2>
+                Substance Interactions between {this.state.drugOne} and{" "}
+                {this.state.drugTwo}:
+              </h2>
               <h3>{interactions}</h3>
-            ) : (
-              <h3>
-                No significant interactions were found between these two
-                substances, but please check with a healthcare professional.
-              </h3>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     );
