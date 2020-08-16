@@ -4,12 +4,14 @@ import { Home, DrugSearch, About, Settings } from "./components";
 
 const Routes = () => {
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/search" component={DrugSearch} />
-    </Switch>
+    <div id="main">
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/search" component={DrugSearch} />
+      </Switch>
+    </div>
   );
 };
 
