@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import regeneratorRuntime from "regenerator-runtime";
+import { Link } from "react-router-dom";
 class DrugSearch extends React.Component {
   constructor() {
     super();
@@ -103,7 +104,7 @@ class DrugSearch extends React.Component {
           <div>
             <form onSubmit={this.handleSubmit} className="column">
               <label>
-                Substance One:
+                <span>Substance One:</span>
                 <input
                   type="text"
                   name="drugOne"
@@ -112,7 +113,7 @@ class DrugSearch extends React.Component {
                 />
               </label>
               <label>
-                (Optional) Substance Two:
+                <span>(Optional) Substance Two:</span>
                 <input
                   type="text"
                   name="drugTwo"
@@ -120,8 +121,11 @@ class DrugSearch extends React.Component {
                   onChange={this.handleChange}
                 />
               </label>
-              <button type="submit">Check Interactions</button>
+              <button type="submit">Quick Check Interactions</button>
             </form>
+          </div>
+          <div id="back">
+            <Link to="/">← Back</Link>
           </div>
         </div>
 
@@ -130,14 +134,14 @@ class DrugSearch extends React.Component {
             <a
               href={`https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=${singleDrugOne}`}
             >
-              Click here for more info on {this.state.drugOne}
+              ★ Click here for more info on {this.state.drugOne}
             </a>
           )}
           {singleDrugTwo && this.state.drugTwo !== "" && (
             <a
               href={`https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=${singleDrugTwo}`}
             >
-              Click here for more info on {this.state.drugTwo}
+              ★ Click here for more info on {this.state.drugTwo}
             </a>
           )}
 

@@ -10,28 +10,20 @@ const Home = () => {
   return (
     <div id="homePage">
       <Link to="/search">
-        <div className="homeIcon">
-          <img src={search}></img>
-          Drug Search
-        </div>
+        <img src={search}></img>
+        <p>Drug Search</p>
       </Link>
       <Link to="/checkin">
-        <div className="homeIcon">
-          <img src={checkin}></img>
-          Check-in
-        </div>
+        <img src={checkin}></img>
+        <p>Check-in</p>
       </Link>
       <Link to="/resources">
-        <div className="homeIcon">
-          <img src={hands}></img>
-          Resources
-        </div>
+        <img src={hands}></img>
+        <p> Resources</p>
       </Link>
       <Link to="/emergency">
-        <div className="homeIcon">
-          <img src={warn}></img>
-          Emergency
-        </div>
+        <img src={warn}></img>
+        <p>Emergency</p>
       </Link>
     </div>
   );
