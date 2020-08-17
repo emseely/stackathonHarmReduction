@@ -3,16 +3,17 @@ body {
   max-width: 1200px;
   min-height: 100vh;
   width: 90vw;
-  margin: 30px auto 0;
+  margin: 30px auto;
   background-color: rgb(128, 179, 221);
+  align-content: center;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 120px;
-  font-size: 12pt;
+  height: 100px;
+  font-size: 10pt;
 }
 
 nav a {
@@ -24,8 +25,8 @@ nav a {
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
+  display: block;
+  width: 100vw;
 }
 
 footer a {
@@ -68,43 +69,44 @@ footer a {
 
 #main {
   padding: 50px 0;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
 }
 
 #homePage {
-  padding-top: 30px;
   max-width: 80%;
-  min-width: 40%;
+  min-width: 30%;
+
   margin: auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 #homePage a {
   text-decoration: none;
-
+  background-color: indigo;
   font-size: 20pt;
+  margin: 10px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+
+  height: 220px;
+  text-align: center;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#homePage a img {
+  height: 40%;
 }
 
 #drugSearch {
   display: flex;
   justify-content: space-evenly;
-}
-
-.homeIcon {
-  background-color: indigo;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 200px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.homeIcon img {
-  width: 110px;
-  height: auto;
-  margin-bottom: 3px;
 }
 
 .column {
@@ -114,12 +116,32 @@ footer a {
   padding: 20px;
 }
 
-@media (max-width: 900px) {
-  .homeIcon {
-    width: 150px;
-    height: 150px;
+.footerHalf a {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin: 5px;
+  max-width: 15vw;
+}
+
+@media (max-width: 600px) {
+  #homePage a {
+    text-decoration: none;
+    background-color: indigo;
+    font-size: 14pt;
+    margin: 5px;
+    padding-top: 20px;
+
+    width: 120px;
+    height: 120px;
+    /* min-width: 100px;
+    min-height: 100px; */
   }
-  .homeIcon img {
-    width: 90px;
+  #homePage a img {
+    height: 50%;
+  }
+  #main {
+    padding: 100px 0;
+    min-height: 40vh;
   }
 }
