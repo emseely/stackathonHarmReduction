@@ -85,7 +85,7 @@ footer a {
 #upperRight {
   display: flex;
   justify-content: space-between;
-  width: 40%;
+  width: 30%;
 
   height: 100%;
 }
@@ -210,5 +210,8 @@ a:active {
   }
   #main {
     min-height: 60vh;
+  }
+  #upperRight {
+    width: 40%;
   }
 }
