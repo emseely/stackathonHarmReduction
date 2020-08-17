@@ -1,10 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
-const Settings = () => {
+import React from "react";
+const Emergency = () => {
   return (
     <div className="center">
       <div id="homePage">
-        <h2>Settings</h2>
+        <h2>Emergency</h2>
       </div>
       <div id="back">
         <Link to="/">← Back</Link>
@@ -13,4 +13,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Emergency;

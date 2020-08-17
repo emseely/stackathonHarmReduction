@@ -1,6 +1,14 @@
 import React from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
-import { Home, DrugSearch, About, Settings } from "./components";
+import {
+  Home,
+  DrugSearch,
+  About,
+  Settings,
+  Checkin,
+  Resources,
+  Emergency,
+} from "./components";
 
 const Routes = () => {
   return (
@@ -10,6 +18,9 @@ const Routes = () => {
         <Route path="/about" component={About} />
         <Route path="/settings" component={Settings} />
         <Route path="/search" component={DrugSearch} />
+        <Route path="/checkin" component={Checkin} />
+        <Route path="/resources" component={Resources} />
+        <Route path="/emergency" component={Emergency} />
       </Switch>
     </div>
   );
